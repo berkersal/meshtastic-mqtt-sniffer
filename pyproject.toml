@@ -1,8 +1,9 @@
 [project]
 name = "meshtastic-mqtt-sniffer"
-version = "0.1.0"
 description = "Capture Meshtastic MQTT packets and save them to SQLite."
 readme = "README.md"
+dynamic = ["version"]
+
 requires-python = ">=3.11"
 dependencies = [
     "loguru>=0.7",
@@ -29,6 +30,7 @@ dev = [
 requires = [
     "grpcio-tools>=1.70",
     "hatchling",
+    "hatch-vcs",
 ]
 build-backend = "hatchling.build"
 
@@ -46,6 +48,9 @@ include = [
     "/protobufs",
     "/src",
 ]
+
+[tool.hatch.version]
+source = "vcs"
 
 [tool.uv]
 package = true
