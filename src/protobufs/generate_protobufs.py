@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import importlib.resources
 import shutil
 from pathlib import Path
 
@@ -36,10 +37,15 @@ def generate_protobufs(root: Path | None = None) -> None:
         err_msg = f"No protobuf files found in {proto_root}"
         raise RuntimeError(err_msg)
 
+    # grpcio-tools bundles the standard Google protobuf .proto files,
+    # including google/protobuf/descriptor.proto, under grpc_tools/_proto.
+    grpc_proto_include = str(importlib.resources.files("grpc_tools").joinpath("_proto"))
+
     result = protoc.main(
         [
             "protoc",
             f"--proto_path={proto_root}",
+            f"--proto_path={grpc_proto_include}",
             f"--python_out={protobufs_dir}",
             f"--pyi_out={protobufs_dir}",
             *proto_files,
