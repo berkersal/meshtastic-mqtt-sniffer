@@ -1,0 +1,40 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+fail_fast: true
+repos:
+-   repo: https://gitlab.com/vojko.pribudic.foss/pre-commit-update
+    rev: v0.9.0
+    hooks:
+    -   id: pre-commit-update
+-   repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.12.10
+    hooks:
+    -   id: uv-lock
+        pass_filenames: false
+        always_run: true
+-   repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.6
+    hooks:
+    -   id: ruff-check
+    -   id: ruff-format
+-   repo: local
+    hooks:
+    -   id: ty-check
+        name: ty check
+        entry: uv run ty check
+        language: system
+        types: [python]
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+    -   id: check-docstring-first
+    -   id: debug-statements
+    -   id: check-merge-conflict
+-   repo: meta
+    hooks:
+    -   id: check-hooks-apply
+    -   id: check-useless-excludes
